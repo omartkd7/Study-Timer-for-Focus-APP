@@ -123,7 +123,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     const SizedBox(height: 10),
                     Text(
                       'Study Timer for Focus',
-                      style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.3), letterSpacing: 1.5),
+                      style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.3), letterSpacing: 1.5),
                     ),
                   ],
                 ),
@@ -148,7 +148,7 @@ class _SplashRingPainter extends CustomPainter {
 
     // Track
     canvas.drawCircle(c, r, Paint()
-      ..color = AppColors.primary.withOpacity(0.1)
+      ..color = AppColors.primary.withValues(alpha: 0.1)
       ..strokeWidth = 6
       ..style = PaintingStyle.stroke);
 

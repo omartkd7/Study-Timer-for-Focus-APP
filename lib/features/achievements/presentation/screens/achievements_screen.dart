@@ -24,12 +24,12 @@ class AchievementsScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [AppColors.warning.withOpacity(0.15), AppColors.accent.withOpacity(0.1)],
+                colors: [AppColors.warning.withValues(alpha: 0.15), AppColors.accent.withValues(alpha: 0.1)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.warning.withOpacity(0.2)),
+              border: Border.all(color: AppColors.warning.withValues(alpha: 0.2)),
             ),
             child: Row(children: [
               const Text('🏅', style: TextStyle(fontSize: 40)),
@@ -49,7 +49,7 @@ class AchievementsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text('Level ${stats.level} · ${stats.xp} XP total',
-                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
               ])),
             ]),
           ),
@@ -57,7 +57,7 @@ class AchievementsScreen extends ConsumerWidget {
 
           // Unlocked
           if (unlocked > 0) ...[
-            _SectionLabel('Unlocked (${unlocked})'),
+            _SectionLabel('Unlocked ($unlocked)'),
             const SizedBox(height: 10),
             ...achievements.where((a) => a.unlocked).map((a) => _AchievementTile(achievement: a)),
             const SizedBox(height: 20),
@@ -86,11 +86,11 @@ class _AchievementTile extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: unlocked
-            ? AppColors.warning.withOpacity(0.08)
+            ? AppColors.warning.withValues(alpha: 0.08)
             : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: unlocked ? AppColors.warning.withOpacity(0.3) : Colors.transparent,
+          color: unlocked ? AppColors.warning.withValues(alpha: 0.3) : Colors.transparent,
         ),
       ),
       child: Row(children: [
@@ -99,7 +99,7 @@ class _AchievementTile extends StatelessWidget {
           width: 48, height: 48,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: unlocked ? AppColors.warning.withOpacity(0.15) : Colors.grey.withOpacity(0.08),
+            color: unlocked ? AppColors.warning.withValues(alpha: 0.15) : Colors.grey.withValues(alpha: 0.08),
           ),
           child: Center(
             child: Text(
@@ -115,7 +115,7 @@ class _AchievementTile extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: unlocked ? null : Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+              color: unlocked ? null : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
             ),
           ),
           const SizedBox(height: 2),
@@ -123,7 +123,7 @@ class _AchievementTile extends StatelessWidget {
             unlocked ? achievement.description : 'Keep studying to unlock',
             style: TextStyle(
               fontSize: 11,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(unlocked ? 0.55 : 0.3),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: unlocked ? 0.55 : 0.3),
             ),
           ),
         ])),
@@ -131,13 +131,13 @@ class _AchievementTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: AppColors.success.withOpacity(0.15),
+              color: AppColors.success.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(Icons.check_rounded, size: 14, color: AppColors.success),
           )
         else
-          Icon(Icons.lock_outline_rounded, size: 18, color: Colors.grey.withOpacity(0.3)),
+          Icon(Icons.lock_outline_rounded, size: 18, color: Colors.grey.withValues(alpha: 0.3)),
       ]),
     );
   }
@@ -151,7 +151,7 @@ class _SectionLabel extends StatelessWidget {
     label,
     style: TextStyle(
       fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5,
-      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4),
     ),
   );
 }

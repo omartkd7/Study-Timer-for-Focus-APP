@@ -103,9 +103,9 @@ class _PodiumCol extends StatelessWidget {
         height: height,
         margin: const EdgeInsets.symmetric(horizontal: 6),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.12),
+          color: color.withValues(alpha: 0.12),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
         ),
         child: Center(child: Text('#${entry.rank}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: color))),
       ),
@@ -124,9 +124,9 @@ class _RankRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: isMe ? AppColors.primary.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
+        color: isMe ? AppColors.primary.withValues(alpha: 0.1) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: isMe ? Border.all(color: AppColors.primary.withOpacity(0.4)) : null,
+        border: isMe ? Border.all(color: AppColors.primary.withValues(alpha: 0.4)) : null,
       ),
       child: Row(children: [
         SizedBox(width: 30, child: Text('#${entry.rank}', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isMe ? AppColors.primary : Colors.grey))),
@@ -135,11 +135,11 @@ class _RankRow extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(entry.name + (isMe ? ' (You)' : ''), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: isMe ? AppColors.primary : null)),
-          Text('🔥 ${entry.streak}-day streak', style: TextStyle(fontSize: 11, color: Colors.grey.withOpacity(0.6))),
+          Text('🔥 ${entry.streak}-day streak', style: TextStyle(fontSize: 11, color: Colors.grey.withValues(alpha: 0.6))),
         ])),
         Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Text(entry.formattedHours, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: isMe ? AppColors.primary : null)),
-          Text('${entry.xp} XP', style: TextStyle(fontSize: 11, color: Colors.grey.withOpacity(0.5))),
+          Text('${entry.xp} XP', style: TextStyle(fontSize: 11, color: Colors.grey.withValues(alpha: 0.5))),
         ]),
       ]),
     );

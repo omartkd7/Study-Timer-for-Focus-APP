@@ -18,6 +18,22 @@ class AppColors {
   static const lightCard  = Color(0xFFF1F0FF);
 }
 
+class SubjectColors {
+  static const _palette = {
+    'Study':    Color(0xFF6C63FF),
+    'Math':     Color(0xFFEF4444),
+    'Science':  Color(0xFF14B8A6),
+    'Language': Color(0xFFF59E0B),
+    'Coding':   Color(0xFF10B981),
+    'Reading':  Color(0xFF3B82F6),
+    'History':  Color(0xFFFF7849),
+    'Art':      Color(0xFFD946EF),
+    'Other':    Color(0xFF94A3B8),
+  };
+
+  static Color of(String subject) => _palette[subject] ?? AppColors.primary;
+}
+
 class AppTheme {
   static ThemeData dark() => _build(Brightness.dark);
   static ThemeData light() => _build(Brightness.light);
@@ -48,7 +64,7 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: dark ? AppColors.darkSurface : Colors.white,
-        indicatorColor: AppColors.primary.withOpacity(0.2),
+        indicatorColor: AppColors.primary.withValues(alpha: 0.2),
         labelTextStyle: WidgetStateProperty.all(
           GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500),
         ),
@@ -74,7 +90,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: dark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.04),
+        fillColor: dark ? Colors.white.withValues(alpha: 0.05) : Colors.black.withValues(alpha: 0.04),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,

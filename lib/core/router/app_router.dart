@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:regain/features/splash/presentation/screens/splash_screen.dart';
 import 'package:regain/features/onboarding/presentation/screens/onboarding_screen.dart';

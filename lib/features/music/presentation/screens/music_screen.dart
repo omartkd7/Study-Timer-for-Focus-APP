@@ -35,7 +35,7 @@ class MusicScreen extends ConsumerWidget {
           // Volume
           _VolumeSlider(volume: music.volume, onChanged: (v) => ref.read(musicProvider.notifier).setVolume(v)),
           const SizedBox(height: 20),
-          Text('Choose a sound', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+          Text('Choose a sound', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
           const SizedBox(height: 12),
           GridView.builder(
             shrinkWrap: true,
@@ -54,9 +54,9 @@ class MusicScreen extends ConsumerWidget {
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: isActive ? AppColors.info.withOpacity(0.12) : Theme.of(context).colorScheme.surface,
+                    color: isActive ? AppColors.info.withValues(alpha: 0.12) : Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
-                    border: isActive ? Border.all(color: AppColors.info.withOpacity(0.5), width: 1.5) : null,
+                    border: isActive ? Border.all(color: AppColors.info.withValues(alpha: 0.5), width: 1.5) : null,
                   ),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -68,7 +68,7 @@ class MusicScreen extends ConsumerWidget {
                     ]),
                     Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(track.name, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isActive ? AppColors.info : null)),
-                      Text(track.description, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+                      Text(track.description, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
                     ]),
                   ]),
                 ),
@@ -78,11 +78,11 @@ class MusicScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: AppColors.warning.withOpacity(0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.warning.withOpacity(0.2))),
+            decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.warning.withValues(alpha: 0.2))),
             child: Row(children: [
               const Icon(Icons.info_outline, size: 16, color: AppColors.warning),
               const SizedBox(width: 10),
-              Expanded(child: Text('Audio playback requires a real device. This demo shows the UI controls.', style: TextStyle(fontSize: 11, color: AppColors.warning.withOpacity(0.9), height: 1.5))),
+              Expanded(child: Text('Audio playback requires a real device. This demo shows the UI controls.', style: TextStyle(fontSize: 11, color: AppColors.warning.withValues(alpha: 0.9), height: 1.5))),
             ]),
           ),
         ],
@@ -101,9 +101,9 @@ class _NowPlayingCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.info.withOpacity(0.1),
+        color: AppColors.info.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.info.withOpacity(0.3)),
+        border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
       ),
       child: Row(children: [
         Text(track.emoji, style: const TextStyle(fontSize: 32)),
@@ -111,7 +111,7 @@ class _NowPlayingCard extends StatelessWidget {
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Text('Now playing', style: TextStyle(fontSize: 10, color: AppColors.info)),
           Text(track.name, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.info)),
-          Text(track.description, style: TextStyle(fontSize: 11, color: AppColors.info.withOpacity(0.7))),
+          Text(track.description, style: TextStyle(fontSize: 11, color: AppColors.info.withValues(alpha: 0.7))),
         ])),
         // Animated bars indicator
         Row(crossAxisAlignment: CrossAxisAlignment.end, children: List.generate(3, (i) => _AnimBar(delay: i * 150))),
@@ -164,7 +164,7 @@ class _VolumeSlider extends StatelessWidget {
         Expanded(child: Slider(
           value: volume, min: 0, max: 1,
           activeColor: AppColors.info,
-          inactiveColor: AppColors.info.withOpacity(0.15),
+          inactiveColor: AppColors.info.withValues(alpha: 0.15),
           onChanged: onChanged,
         )),
         const Icon(Icons.volume_up_rounded, size: 20, color: AppColors.info),

@@ -30,7 +30,7 @@ class StatsScreen extends ConsumerWidget {
           borderRadius: BorderRadius.circular(6),
           backDrawRodData: BackgroundBarChartRodData(
             show: true, toY: 150,
-            color: AppColors.primary.withOpacity(0.07),
+            color: AppColors.primary.withValues(alpha: 0.07),
           ),
         ),
       ]);
@@ -91,13 +91,13 @@ class StatsScreen extends ConsumerWidget {
               barGroups: days,
               gridData: FlGridData(
                 show: true, drawVerticalLine: false, horizontalInterval: 50,
-                getDrawingHorizontalLine: (_) => FlLine(color: Colors.grey.withOpacity(0.1), strokeWidth: 1),
+                getDrawingHorizontalLine: (_) => FlLine(color: Colors.grey.withValues(alpha: 0.1), strokeWidth: 1),
               ),
               borderData: FlBorderData(show: false),
               titlesData: FlTitlesData(
                 leftTitles: AxisTitles(sideTitles: SideTitles(
                   showTitles: true, reservedSize: 36, interval: 50,
-                  getTitlesWidget: (v, _) => Text(v == 0 ? '' : '${v.toInt()}m', style: TextStyle(fontSize: 10, color: Colors.grey.withOpacity(0.5))),
+                  getTitlesWidget: (v, _) => Text(v == 0 ? '' : '${v.toInt()}m', style: TextStyle(fontSize: 10, color: Colors.grey.withValues(alpha: 0.5))),
                 )),
                 rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 topTitles:   const AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -111,7 +111,7 @@ class StatsScreen extends ConsumerWidget {
                       child: Text(dayLabels[idx], style: TextStyle(
                         fontSize: 11,
                         fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
-                        color: isToday ? AppColors.primary : Colors.grey.withOpacity(0.5),
+                        color: isToday ? AppColors.primary : Colors.grey.withValues(alpha: 0.5),
                       )),
                     );
                   },
@@ -129,14 +129,15 @@ class StatsScreen extends ConsumerWidget {
             Center(child: Padding(
               padding: const EdgeInsets.all(32),
               child: Column(children: [
-                Icon(Icons.hourglass_empty_rounded, size: 40, color: Colors.grey.withOpacity(0.3)),
+                Icon(Icons.hourglass_empty_rounded, size: 40, color: Colors.grey.withValues(alpha: 0.3)),
                 const SizedBox(height: 8),
-                Text('No sessions yet. Start focusing!', style: TextStyle(color: Colors.grey.withOpacity(0.5))),
+                Text('No sessions yet. Start focusing!', style: TextStyle(color: Colors.grey.withValues(alpha: 0.5))),
               ]),
             ))
           else
             ...stats.sessions.take(10).map((s) {
-              final h = '${s.startTime.hour.toString().padLeft(2,'0')}:${s.startTime.minute.toString().padLeft(2,'0')}';
+              final h  = '${s.startTime.hour.toString().padLeft(2,'0')}:${s.startTime.minute.toString().padLeft(2,'0')}';
+              final sc = SubjectColors.of(s.subject);
               return Container(
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.all(14),
@@ -147,15 +148,15 @@ class StatsScreen extends ConsumerWidget {
                 child: Row(children: [
                   Container(
                     width: 40, height: 40,
-                    decoration: BoxDecoration(color: AppColors.focus.withOpacity(0.12), borderRadius: BorderRadius.circular(10)),
-                    child: const Icon(Icons.timer_outlined, color: AppColors.focus, size: 20),
+                    decoration: BoxDecoration(color: sc.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
+                    child: Icon(Icons.timer_outlined, color: sc, size: 20),
                   ),
                   const SizedBox(width: 12),
                   Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(s.subject, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
-                    Text(h, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+                    Text(s.subject, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: sc)),
+                    Text(h, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
                   ])),
-                  Text('${s.durationMinutes}m', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.focus)),
+                  Text('${s.durationMinutes}m', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: sc)),
                 ]),
               );
             }),
@@ -184,9 +185,9 @@ class StatsScreen extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
-                  color: sel ? AppColors.primary.withOpacity(0.15) : Colors.transparent,
+                  color: sel ? AppColors.primary.withValues(alpha: 0.15) : Colors.transparent,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: sel ? AppColors.primary : Colors.grey.withOpacity(0.3)),
+                  border: Border.all(color: sel ? AppColors.primary : Colors.grey.withValues(alpha: 0.3)),
                 ),
                 child: Text(label, style: TextStyle(fontWeight: sel ? FontWeight.w600 : FontWeight.w400, color: sel ? AppColors.primary : null)),
               ),
@@ -208,7 +209,7 @@ class _LevelCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [AppColors.primary, AppColors.primaryDark], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark], begin: Alignment.topLeft, end: Alignment.bottomRight),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -217,20 +218,20 @@ class _LevelCard extends StatelessWidget {
           const SizedBox(width: 8),
           Text('Level ${stats.level}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white)),
           const Spacer(),
-          Text('${stats.xpInCurrentLevel} / 100 XP', style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.75))),
+          Text('${stats.xpInCurrentLevel} / 100 XP', style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.75))),
         ]),
         const SizedBox(height: 12),
         ClipRRect(
           borderRadius: BorderRadius.circular(6),
           child: LinearProgressIndicator(
             value: stats.levelProgress, minHeight: 8,
-            backgroundColor: Colors.white.withOpacity(0.2),
+            backgroundColor: Colors.white.withValues(alpha: 0.2),
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
           ),
         ),
         const SizedBox(height: 6),
         Text('${100 - stats.xpInCurrentLevel} XP to Level ${stats.level + 1}',
-            style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.65))),
+            style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.65))),
       ]),
     );
   }
@@ -260,7 +261,7 @@ class _DailyGoalCard extends StatelessWidget {
             onTap: onEditGoal,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
               child: Text('${goal.achievedMinutes}/${goal.targetMinutes}m', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: color)),
             ),
           ),
@@ -270,16 +271,16 @@ class _DailyGoalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
           child: LinearProgressIndicator(
             value: goal.progress, minHeight: 8,
-            backgroundColor: color.withOpacity(0.1),
+            backgroundColor: color.withValues(alpha: 0.1),
             valueColor: AlwaysStoppedAnimation<Color>(color),
           ),
         ),
         if (goal.isAchieved) ...[
           const SizedBox(height: 8),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Icon(Icons.check_circle, size: 14, color: AppColors.success),
-            const SizedBox(width: 4),
-            const Text('Goal achieved today!', style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.w500)),
+          const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Icon(Icons.check_circle, size: 14, color: AppColors.success),
+            SizedBox(width: 4),
+            Text('Goal achieved today!', style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.w500)),
           ]),
         ],
       ]),
@@ -302,7 +303,7 @@ class _MetricCard extends StatelessWidget {
         Icon(icon, color: color, size: 20),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: color)),
-          Text(label, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+          Text(label, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
         ]),
       ]),
     );

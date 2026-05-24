@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:regain/shared/models/models.dart';
 import 'package:regain/core/constants/app_constants.dart';
 import 'package:regain/features/settings/providers/settings_provider.dart';
 import 'package:regain/features/stats/providers/stats_provider.dart';
 import 'package:regain/features/tasks/providers/tasks_provider.dart';
+import 'package:regain/services/notification_service.dart';
 
 class TimerState {
   final TimerMode mode;
@@ -71,10 +73,12 @@ class TimerNotifier extends StateNotifier<TimerState> {
     _sw = Stopwatch()..start();
     _ticker = Timer.periodic(const Duration(milliseconds: 200), (_) => _tick());
     state = state.copyWith(status: TimerStatus.running);
+    _scheduleNotification(state.remainingSeconds, state.mode);
   }
 
   void pause() {
     _ticker?.cancel(); _sw.stop();
+    NotificationService.cancelAll();
     state = state.copyWith(status: TimerStatus.paused);
   }
 
@@ -82,14 +86,26 @@ class TimerNotifier extends StateNotifier<TimerState> {
 
   void skip() {
     _ticker?.cancel(); _sw.stop();
+    NotificationService.cancelAll();
     _advanceMode();
   }
 
   void reset() {
     _ticker?.cancel(); _sw.stop();
+    NotificationService.cancelAll();
     final s = _ref.read(settingsProvider);
     final secs = _durationFor(state.mode, s) * 60;
     state = state.copyWith(status: TimerStatus.idle, totalSeconds: secs, remainingSeconds: secs);
+  }
+
+  void _scheduleNotification(int remainingSeconds, TimerMode mode) {
+    final title = mode == TimerMode.focus ? 'Focus session complete!' : 'Break time over!';
+    final body  = mode == TimerMode.focus ? 'Time for a break. Great work!' : 'Ready to focus again?';
+    NotificationService.scheduleComplete(
+      delaySeconds: remainingSeconds,
+      title: title,
+      body: body,
+    );
   }
 
   void setSubject(String subject) => state = state.copyWith(subject: subject);
@@ -111,8 +127,13 @@ class TimerNotifier extends StateNotifier<TimerState> {
   }
 
   void _onComplete() {
+    final settings = _ref.read(settingsProvider);
+    if (settings.soundEnabled) {
+      SystemSound.play(SystemSoundType.alert);
+    }
+    NotificationService.cancelAll();
+
     if (state.mode == TimerMode.focus) {
-      final settings = _ref.read(settingsProvider);
       final newCount = state.completedSessions + 1;
       _ref.read(statsProvider.notifier).recordSession(
         durationMinutes: settings.focusDuration,

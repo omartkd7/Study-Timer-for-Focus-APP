@@ -48,19 +48,19 @@ class TimerScreen extends ConsumerWidget {
             Container(
               margin: const EdgeInsets.only(right: 4),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(color: AppColors.info.withOpacity(0.15), borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(Icons.music_note, size: 12, color: AppColors.info),
+                const Icon(Icons.music_note, size: 12, color: AppColors.info),
                 const SizedBox(width: 3),
                 Text(ambientTracks.firstWhere((t) => t.id == music.activeTrackId, orElse: () => ambientTracks.first).name,
-                    style: TextStyle(fontSize: 11, color: AppColors.info)),
+                    style: const TextStyle(fontSize: 11, color: AppColors.info)),
               ]),
             ),
           // XP badge
           Container(
             margin: const EdgeInsets.only(right: 14),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(color: color.withOpacity(0.15), borderRadius: BorderRadius.circular(20)),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.bolt, size: 14, color: color),
               const SizedBox(width: 3),
@@ -85,11 +85,11 @@ class TimerScreen extends ConsumerWidget {
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: sel ? c.withOpacity(0.15) : Colors.transparent,
+                      color: sel ? c.withValues(alpha: 0.15) : Colors.transparent,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: sel ? c : c.withOpacity(0.3), width: sel ? 1.5 : 1),
+                      border: Border.all(color: sel ? c : c.withValues(alpha: 0.3), width: sel ? 1.5 : 1),
                     ),
-                    child: Text(m.label, style: TextStyle(fontSize: 11, fontWeight: sel ? FontWeight.w600 : FontWeight.w400, color: sel ? c : c.withOpacity(0.5))),
+                    child: Text(m.label, style: TextStyle(fontSize: 11, fontWeight: sel ? FontWeight.w600 : FontWeight.w400, color: sel ? c : c.withValues(alpha: 0.5))),
                   ),
                 ),
               );
@@ -99,7 +99,7 @@ class TimerScreen extends ConsumerWidget {
             if (stats.currentStreak > 0)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                decoration: BoxDecoration(color: AppColors.warning.withOpacity(0.12), borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   const Icon(Icons.local_fire_department, size: 14, color: AppColors.warning),
                   const SizedBox(width: 4),
@@ -117,11 +117,11 @@ class TimerScreen extends ConsumerWidget {
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 400),
                     width: sz * 0.78, height: sz * 0.78,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: color.withOpacity(timer.status == TimerStatus.running ? 0.07 : 0.04)),
+                    decoration: BoxDecoration(shape: BoxShape.circle, color: color.withValues(alpha: timer.status == TimerStatus.running ? 0.07 : 0.04)),
                   ),
                   CustomPaint(
                     size: Size(sz, sz),
-                    painter: CircularTimerPainter(progress: timer.progress, trackColor: color.withOpacity(0.12), progressColor: color, strokeWidth: sz * 0.04),
+                    painter: CircularTimerPainter(progress: timer.progress, trackColor: color.withValues(alpha: 0.12), progressColor: color, strokeWidth: sz * 0.04),
                   ),
                   Column(mainAxisSize: MainAxisSize.min, children: [
                     Text(timer.formattedTime, style: TextStyle(fontSize: sz * 0.18, fontWeight: FontWeight.w200, color: Theme.of(context).colorScheme.onSurface, letterSpacing: -2)),
@@ -133,11 +133,11 @@ class TimerScreen extends ConsumerWidget {
                       onTap: () => _showSubjectPicker(context, ref, timer.subject),
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(border: Border.all(color: color.withOpacity(0.4)), borderRadius: BorderRadius.circular(20)),
+                        decoration: BoxDecoration(border: Border.all(color: color.withValues(alpha: 0.4)), borderRadius: BorderRadius.circular(20)),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
-                          Icon(Icons.edit_outlined, size: 10, color: color.withOpacity(0.7)),
+                          Icon(Icons.edit_outlined, size: 10, color: color.withValues(alpha: 0.7)),
                           const SizedBox(width: 4),
-                          Text(activeTask?.title ?? timer.subject, style: TextStyle(fontSize: 11, color: color.withOpacity(0.8))),
+                          Text(activeTask?.title ?? timer.subject, style: TextStyle(fontSize: 11, color: color.withValues(alpha: 0.8))),
                         ]),
                       ),
                     ),
@@ -149,7 +149,7 @@ class TimerScreen extends ConsumerWidget {
             // Session dots
             Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(settings.sessionsBeforeLongBreak, (i) {
               final done = i < timer.completedSessions % settings.sessionsBeforeLongBreak;
-              return Container(margin: const EdgeInsets.symmetric(horizontal: 3), width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: done ? color : color.withOpacity(0.2)));
+              return Container(margin: const EdgeInsets.symmetric(horizontal: 3), width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: done ? color : color.withValues(alpha: 0.2)));
             })),
 
             const SizedBox(height: 16),
@@ -165,14 +165,14 @@ class TimerScreen extends ConsumerWidget {
               IconButton(
                 onPressed: () => context.go('/music'),
                 icon: const Icon(Icons.music_note_outlined),
-                style: IconButton.styleFrom(foregroundColor: music.isPlaying ? AppColors.info : Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+                style: IconButton.styleFrom(foregroundColor: music.isPlaying ? AppColors.info : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 8),
               // Reset
               IconButton(
                 onPressed: () => ref.read(timerProvider.notifier).reset(),
                 icon: const Icon(Icons.refresh_rounded),
-                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 8),
               // Play/Pause
@@ -193,14 +193,14 @@ class TimerScreen extends ConsumerWidget {
               IconButton(
                 onPressed: () => ref.read(timerProvider.notifier).skip(),
                 icon: const Icon(Icons.skip_next_rounded),
-                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
               ),
               const SizedBox(width: 8),
               // Tasks
               IconButton(
                 onPressed: () => context.go('/tasks'),
                 icon: const Icon(Icons.checklist_rounded),
-                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.4)),
+                style: IconButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4)),
               ),
             ]),
 
@@ -236,16 +236,17 @@ class TimerScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           Wrap(spacing: 8, runSpacing: 8, children: subjects.map((s) {
             final sel = s == current;
+            final sc  = SubjectColors.of(s);
             return GestureDetector(
               onTap: () { ref.read(timerProvider.notifier).setSubject(s); Navigator.pop(context); },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
-                  color: sel ? AppColors.primary.withOpacity(0.15) : Colors.transparent,
+                  color: sel ? sc.withValues(alpha: 0.15) : Colors.transparent,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: sel ? AppColors.primary : Colors.grey.withOpacity(0.3)),
+                  border: Border.all(color: sel ? sc : Colors.grey.withValues(alpha: 0.3)),
                 ),
-                child: Text(s, style: TextStyle(fontWeight: sel ? FontWeight.w600 : FontWeight.w400, color: sel ? AppColors.primary : null)),
+                child: Text(s, style: TextStyle(fontWeight: sel ? FontWeight.w600 : FontWeight.w400, color: sel ? sc : null)),
               ),
             );
           }).toList()),
@@ -265,7 +266,7 @@ class _DailyGoalBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text('Daily goal', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+        Text('Daily goal', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
         Text('${goal.achievedMinutes}/${goal.targetMinutes}m', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: goal.isAchieved ? AppColors.success : color)),
       ]),
       const SizedBox(height: 6),
@@ -274,7 +275,7 @@ class _DailyGoalBar extends StatelessWidget {
         child: LinearProgressIndicator(
           value: goal.progress,
           minHeight: 5,
-          backgroundColor: color.withOpacity(0.1),
+          backgroundColor: color.withValues(alpha: 0.1),
           valueColor: AlwaysStoppedAnimation<Color>(goal.isAchieved ? AppColors.success : color),
         ),
       ),
@@ -290,6 +291,6 @@ class _TodayStat extends StatelessWidget {
   Widget build(BuildContext context) => Column(children: [
     Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: color)),
     const SizedBox(height: 2),
-    Text(label, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+    Text(label, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
   ]);
 }

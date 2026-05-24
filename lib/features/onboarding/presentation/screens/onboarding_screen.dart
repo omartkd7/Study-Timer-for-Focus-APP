@@ -70,7 +70,7 @@ class _OnboardingState extends ConsumerState<OnboardingScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: _finish,
-                child: Text('Skip', style: TextStyle(color: Colors.white38, fontSize: 14)),
+                child: const Text('Skip', style: TextStyle(color: Colors.white38, fontSize: 14)),
               ),
             ),
             // Pages
@@ -142,8 +142,8 @@ class _OnboardPage extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: color.withOpacity(0.12),
-              border: Border.all(color: color.withOpacity(0.25), width: 1.5),
+              color: color.withValues(alpha: 0.12),
+              border: Border.all(color: color.withValues(alpha: 0.25), width: 1.5),
             ),
             child: Center(child: Text(emoji, style: const TextStyle(fontSize: 48))),
           ),

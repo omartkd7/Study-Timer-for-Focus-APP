@@ -83,8 +83,8 @@ class StatsNotifier extends StateNotifier<StatsState> {
       final today = DateTime(now.year, now.month, now.day);
       final lastDay = DateTime(last.year, last.month, last.day);
       final diff = today.difference(lastDay).inDays;
-      if (diff == 1) newStreak++;
-      else if (diff > 1) newStreak = 1;
+      if (diff == 1) { newStreak++; }
+      else if (diff > 1) { newStreak = 1; }
     }
     final newTotal = state.totalSessions + 1;
     final newMins = state.totalMinutes + durationMinutes;

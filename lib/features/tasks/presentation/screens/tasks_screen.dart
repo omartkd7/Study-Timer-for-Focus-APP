@@ -81,16 +81,17 @@ class TasksScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             Wrap(spacing: 6, runSpacing: 6, children: subjects.map((s) {
               final sel = s == subject;
+              final sc  = SubjectColors.of(s);
               return GestureDetector(
                 onTap: () => setState(() => subject = s),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: sel ? AppColors.primary.withOpacity(0.15) : Colors.transparent,
+                    color: sel ? sc.withValues(alpha: 0.15) : Colors.transparent,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: sel ? AppColors.primary : Colors.grey.withOpacity(0.3)),
+                    border: Border.all(color: sel ? sc : Colors.grey.withValues(alpha: 0.3)),
                   ),
-                  child: Text(s, style: TextStyle(fontSize: 12, color: sel ? AppColors.primary : null, fontWeight: sel ? FontWeight.w600 : FontWeight.w400)),
+                  child: Text(s, style: TextStyle(fontSize: 12, color: sel ? sc : null, fontWeight: sel ? FontWeight.w600 : FontWeight.w400)),
                 ),
               );
             }).toList()),
@@ -142,7 +143,7 @@ class _TaskCard extends ConsumerWidget {
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(color: Colors.red.withOpacity(0.15), borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(color: Colors.red.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(16)),
         child: const Icon(Icons.delete_outline, color: Colors.red),
       ),
       onDismissed: (_) => ref.read(tasksProvider.notifier).deleteTask(task.id),
@@ -151,9 +152,9 @@ class _TaskCard extends ConsumerWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.primary.withOpacity(0.1) : Theme.of(context).colorScheme.surface,
+          color: isActive ? AppColors.primary.withValues(alpha: 0.1) : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          border: isActive ? Border.all(color: AppColors.primary.withOpacity(0.4)) : null,
+          border: isActive ? Border.all(color: AppColors.primary.withValues(alpha: 0.4)) : null,
         ),
         child: Row(children: [
           // Checkbox
@@ -164,8 +165,8 @@ class _TaskCard extends ConsumerWidget {
               width: 22, height: 22,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: task.isDone ? AppColors.success.withOpacity(0.15) : Colors.transparent,
-                border: Border.all(color: task.isDone ? AppColors.success : Colors.grey.withOpacity(0.4), width: 1.5),
+                color: task.isDone ? AppColors.success.withValues(alpha: 0.15) : Colors.transparent,
+                border: Border.all(color: task.isDone ? AppColors.success : Colors.grey.withValues(alpha: 0.4), width: 1.5),
               ),
               child: task.isDone ? const Icon(Icons.check, size: 13, color: AppColors.success) : null,
             ),
@@ -177,16 +178,19 @@ class _TaskCard extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 14, fontWeight: FontWeight.w500,
                 decoration: task.isDone ? TextDecoration.lineThrough : null,
-                color: task.isDone ? Theme.of(context).colorScheme.onSurface.withOpacity(0.4) : null,
+                color: task.isDone ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4) : null,
               ),
             ),
             const SizedBox(height: 3),
             Row(children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(6)),
-                child: Text(task.subject, style: const TextStyle(fontSize: 10, color: AppColors.primary)),
-              ),
+              Builder(builder: (_) {
+                final sc = SubjectColors.of(task.subject);
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  decoration: BoxDecoration(color: sc.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(6)),
+                  child: Text(task.subject, style: TextStyle(fontSize: 10, color: sc, fontWeight: FontWeight.w600)),
+                );
+              }),
               const SizedBox(width: 6),
               // Pomodoro dots
               ...List.generate(task.estimatedPomodoros, (i) => Container(
@@ -194,7 +198,7 @@ class _TaskCard extends ConsumerWidget {
                 width: 7, height: 7,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: i < task.completedPomodoros ? AppColors.primary : AppColors.primary.withOpacity(0.2),
+                  color: i < task.completedPomodoros ? AppColors.primary : AppColors.primary.withValues(alpha: 0.2),
                 ),
               )),
             ]),
@@ -213,7 +217,7 @@ class _TaskCard extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: isActive ? AppColors.primary : AppColors.primary.withOpacity(0.12),
+                  color: isActive ? AppColors.primary : AppColors.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(isActive ? 'Active' : 'Focus', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: isActive ? Colors.white : AppColors.primary)),
@@ -231,7 +235,7 @@ class _SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(bottom: 8),
-    child: Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4))),
+    child: Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4))),
   );
 }
 
@@ -240,9 +244,9 @@ class _EmptyState extends StatelessWidget {
   const _EmptyState({required this.onAdd});
   @override
   Widget build(BuildContext context) => Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-    Icon(Icons.checklist_rounded, size: 56, color: Colors.grey.withOpacity(0.3)),
+    Icon(Icons.checklist_rounded, size: 56, color: Colors.grey.withValues(alpha: 0.3)),
     const SizedBox(height: 16),
-    Text('No tasks yet', style: TextStyle(fontSize: 16, color: Colors.grey.withOpacity(0.5))),
+    Text('No tasks yet', style: TextStyle(fontSize: 16, color: Colors.grey.withValues(alpha: 0.5))),
     const SizedBox(height: 8),
     TextButton(onPressed: onAdd, child: const Text('Add your first task', style: TextStyle(color: AppColors.primary))),
   ]));

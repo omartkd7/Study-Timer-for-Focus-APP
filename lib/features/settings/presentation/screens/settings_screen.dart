@@ -23,7 +23,7 @@ class SettingsScreen extends ConsumerWidget {
           _ProfileCard(stats: stats),
           const SizedBox(height: 20),
 
-          _SectionLabel('Pomodoro timer'),
+          const _SectionLabel('Pomodoro timer'),
           const SizedBox(height: 10),
           _DurationRow(label: 'Focus duration', icon: Icons.timer_outlined, color: AppColors.focus,
               value: settings.focusDuration, min: 5, max: 90, step: 5, onChanged: n.setFocusDuration),
@@ -35,11 +35,11 @@ class SettingsScreen extends ConsumerWidget {
               value: settings.longBreak, min: 5, max: 60, step: 5, onChanged: n.setLongBreak),
           const SizedBox(height: 8),
           _SettingCard(child: Row(children: [
-            _IconBadge(icon: Icons.repeat_rounded, color: AppColors.accent),
+            const _IconBadge(icon: Icons.repeat_rounded, color: AppColors.accent),
             const SizedBox(width: 12),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Sessions before long break', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-              Text('${settings.sessionsBeforeLongBreak} pomodoros', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+              Text('${settings.sessionsBeforeLongBreak} pomodoros', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
             ])),
             _Stepper(
               value: settings.sessionsBeforeLongBreak,
@@ -51,15 +51,15 @@ class SettingsScreen extends ConsumerWidget {
           ])),
 
           const SizedBox(height: 20),
-          _SectionLabel('Daily goal'),
+          const _SectionLabel('Daily goal'),
           const SizedBox(height: 10),
           _SettingCard(child: Column(children: [
             Row(children: [
-              _IconBadge(icon: Icons.flag_outlined, color: AppColors.success),
+              const _IconBadge(icon: Icons.flag_outlined, color: AppColors.success),
               const SizedBox(width: 12),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const Text('Daily focus target', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-                Text('${settings.dailyGoalMinutes} minutes per day', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+                Text('${settings.dailyGoalMinutes} minutes per day', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
               ])),
             ]),
             const SizedBox(height: 12),
@@ -67,19 +67,19 @@ class SettingsScreen extends ConsumerWidget {
               value: settings.dailyGoalMinutes.toDouble(),
               min: 30, max: 300, divisions: 9,
               activeColor: AppColors.success,
-              inactiveColor: AppColors.success.withOpacity(0.15),
+              inactiveColor: AppColors.success.withValues(alpha: 0.15),
               label: '${settings.dailyGoalMinutes}m',
               onChanged: (v) => n.setDailyGoal(v.round()),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text('30m', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4))),
+              Text('30m', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4))),
               Text('${settings.dailyGoalMinutes}m', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.success)),
-              Text('5h', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4))),
+              Text('5h', style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.4))),
             ]),
           ])),
 
           const SizedBox(height: 20),
-          _SectionLabel('Preferences'),
+          const _SectionLabel('Preferences'),
           const SizedBox(height: 10),
           _SettingCard(child: Column(children: [
             _SwitchRow(icon: Icons.dark_mode_outlined, iconColor: const Color(0xFF7C3AED), label: 'Dark mode', subtitle: 'Easy on the eyes', value: settings.darkMode, onChanged: (_) => n.toggleDarkMode()),
@@ -88,7 +88,7 @@ class SettingsScreen extends ConsumerWidget {
           ])),
 
           const SizedBox(height: 20),
-          _SectionLabel('Quick links'),
+          const _SectionLabel('Quick links'),
           const SizedBox(height: 10),
           _SettingCard(child: Column(children: [
             _LinkRow(icon: Icons.emoji_events_outlined, color: AppColors.warning, label: 'Achievements', onTap: () => context.go('/achievements')),
@@ -99,13 +99,13 @@ class SettingsScreen extends ConsumerWidget {
           ])),
 
           const SizedBox(height: 20),
-          _SectionLabel('About'),
+          const _SectionLabel('About'),
           const SizedBox(height: 10),
-          _SettingCard(child: Column(children: [
+          const _SettingCard(child: Column(children: [
             _InfoRow(label: 'App', value: 'Regain v2.0'),
-            const Divider(height: 1),
+            Divider(height: 1),
             _InfoRow(label: 'Version', value: '2.0.0'),
-            const Divider(height: 1),
+            Divider(height: 1),
             _InfoRow(label: 'Built with', value: 'Flutter + Riverpod'),
           ])),
           const SizedBox(height: 40),
@@ -130,19 +130,19 @@ class _ProfileCard extends StatelessWidget {
       child: Row(children: [
         Container(
           width: 56, height: 56,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primary.withOpacity(0.15)),
-          child: Center(child: Text('⚡', style: const TextStyle(fontSize: 24))),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primary.withValues(alpha: 0.15)),
+          child: const Center(child: Text('⚡', style: TextStyle(fontSize: 24))),
         ),
         const SizedBox(width: 14),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('Level ${stats.level}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-          Text('${stats.totalSessions} sessions · ${stats.currentStreak}-day streak', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
+          Text('${stats.totalSessions} sessions · ${stats.currentStreak}-day streak', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5))),
           const SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: stats.levelProgress, minHeight: 5,
-              backgroundColor: AppColors.primary.withOpacity(0.1),
+              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
             ),
           ),
@@ -159,7 +159,7 @@ class _SectionLabel extends StatelessWidget {
   const _SectionLabel(this.label);
   @override
   Widget build(BuildContext context) => Text(label.toUpperCase(),
-      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.35)));
+      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 0.8, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.35)));
 }
 
 class _SettingCard extends StatelessWidget {
@@ -210,8 +210,8 @@ class _StepBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
     onTap: onTap,
-    child: Container(width: 28, height: 28, decoration: BoxDecoration(shape: BoxShape.circle, color: enabled ? color.withOpacity(0.12) : Colors.grey.withOpacity(0.06)),
-      child: Icon(icon, size: 15, color: enabled ? color : Colors.grey.withOpacity(0.3))),
+    child: Container(width: 28, height: 28, decoration: BoxDecoration(shape: BoxShape.circle, color: enabled ? color.withValues(alpha: 0.12) : Colors.grey.withValues(alpha: 0.06)),
+      child: Icon(icon, size: 15, color: enabled ? color : Colors.grey.withValues(alpha: 0.3))),
   );
 }
 
@@ -219,7 +219,7 @@ class _IconBadge extends StatelessWidget {
   final IconData icon; final Color color;
   const _IconBadge({required this.icon, required this.color});
   @override
-  Widget build(BuildContext context) => Container(width: 34, height: 34, decoration: BoxDecoration(color: color.withOpacity(0.12), borderRadius: BorderRadius.circular(10)), child: Icon(icon, size: 18, color: color));
+  Widget build(BuildContext context) => Container(width: 34, height: 34, decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)), child: Icon(icon, size: 18, color: color));
 }
 
 class _SwitchRow extends StatelessWidget {
@@ -233,9 +233,9 @@ class _SwitchRow extends StatelessWidget {
       const SizedBox(width: 12),
       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-        Text(subtitle, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+        Text(subtitle, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
       ])),
-      Switch.adaptive(value: value, onChanged: onChanged, activeColor: AppColors.primary),
+      Switch.adaptive(value: value, onChanged: onChanged, activeThumbColor: AppColors.primary, activeTrackColor: AppColors.primary.withValues(alpha: 0.5)),
     ]),
   );
 }
@@ -252,7 +252,7 @@ class _LinkRow extends StatelessWidget {
         _IconBadge(icon: icon, color: color),
         const SizedBox(width: 12),
         Expanded(child: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500))),
-        Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3)),
+        Icon(Icons.chevron_right_rounded, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3)),
       ]),
     ),
   );
@@ -265,7 +265,7 @@ class _InfoRow extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 10),
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(label, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.45))),
+      Text(label, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.45))),
       Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
     ]),
   );
