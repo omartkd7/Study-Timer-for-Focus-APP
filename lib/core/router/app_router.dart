@@ -3,7 +3,6 @@ import 'package:regain/features/splash/presentation/screens/splash_screen.dart';
 import 'package:regain/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:regain/features/timer/presentation/screens/timer_screen.dart';
 import 'package:regain/features/stats/presentation/screens/stats_screen.dart';
-import 'package:regain/features/leaderboard/presentation/screens/leaderboard_screen.dart';
 import 'package:regain/features/settings/presentation/screens/settings_screen.dart';
 import 'package:regain/features/tasks/presentation/screens/tasks_screen.dart';
 import 'package:regain/features/music/presentation/screens/music_screen.dart';
@@ -27,10 +26,9 @@ final appRouter = GoRouter(
     ShellRoute(
       builder: (_, state, child) => ShellScaffold(child: child),
       routes: [
-        GoRoute(path: '/timer',        pageBuilder: (_, __) => const NoTransitionPage(child: TimerScreen())),
-        GoRoute(path: '/stats',        pageBuilder: (_, __) => const NoTransitionPage(child: StatsScreen())),
-        GoRoute(path: '/leaderboard',  pageBuilder: (_, __) => const NoTransitionPage(child: LeaderboardScreen())),
-        GoRoute(path: '/settings',     pageBuilder: (_, __) => const NoTransitionPage(child: SettingsScreen())),
+        GoRoute(path: '/timer',    pageBuilder: (_, __) => const NoTransitionPage(child: TimerScreen())),
+        GoRoute(path: '/stats',    pageBuilder: (_, __) => const NoTransitionPage(child: StatsScreen())),
+        GoRoute(path: '/settings', pageBuilder: (_, __) => const NoTransitionPage(child: SettingsScreen())),
       ],
     ),
     // Full-screen routes (no nav bar)

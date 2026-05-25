@@ -47,5 +47,9 @@
 	<true/>
 	<key>NSUserNotificationUsageDescription</key>
 	<string>Regain sends alerts when your focus or break session ends so you never lose track of time.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>

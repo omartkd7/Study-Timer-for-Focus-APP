@@ -61,7 +61,9 @@ class MusicScreen extends ConsumerWidget {
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(track.emoji, style: const TextStyle(fontSize: 24)),
-                      if (isPlaying)
+                      if (isActive && music.isLoading)
+                        const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.info))
+                      else if (isPlaying)
                         const Icon(Icons.pause_rounded, size: 16, color: AppColors.info)
                       else if (isActive)
                         const Icon(Icons.play_arrow_rounded, size: 16, color: AppColors.info),
@@ -78,11 +80,15 @@ class MusicScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.warning.withValues(alpha: 0.2))),
-            child: Row(children: [
-              const Icon(Icons.info_outline, size: 16, color: AppColors.warning),
-              const SizedBox(width: 10),
-              Expanded(child: Text('Audio playback requires a real device. This demo shows the UI controls.', style: TextStyle(fontSize: 11, color: AppColors.warning.withValues(alpha: 0.9), height: 1.5))),
+            decoration: BoxDecoration(
+              color: AppColors.info.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.info.withValues(alpha: 0.15)),
+            ),
+            child: const Row(children: [
+              Icon(Icons.music_note_outlined, size: 16, color: AppColors.info),
+              SizedBox(width: 10),
+              Expanded(child: Text('Sounds are generated locally — no internet needed and fully copyright-free.', style: TextStyle(fontSize: 11, color: AppColors.info, height: 1.5))),
             ]),
           ),
         ],
